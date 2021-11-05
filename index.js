@@ -2,7 +2,7 @@
 // const github = require("@actions/github");
 const { Octokit } = require("@octokit/rest"); // 개발 용도로 직접 사용
 
-const MY_LIMITED_30DAYS_TOKEN = "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";
+const MY_LIMITED_30DAYS_TOKEN = "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";
 const owner = "seongbin9786";
 const repo = "study-nodejs-typescript";
 
@@ -34,11 +34,12 @@ async function run() {
     // 이 파일은 {repo}/.attendance/usermap.txt 를 읽어 map을 구성하면 될듯하다.
     console.log(userName);
 
-    octokit.rest.repos.getContent({
+    const result = await octokit.rest.repos.getContent({
       owner,
       repo,
-      path,
+      path: ".attendance/usermap.txt",
     });
+    console.log(result);
   } catch (error) {
     // core.setFailed(error.message);
     console.log(error);
