@@ -1,0 +1,37 @@
+name: Participation Logger
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  logging:
+    name: Logging another participation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout to branch
+        uses: actions/checkout@v2
+        with: 
+          fetch-depth: 0
+
+      - name: "Run Workflow: changed-files"
+        uses: tj-actions/changed-files@v1.2.0
+        id: changed-files
+
+      - name: Show output
+        run: |
+          echo "${{ toJSON(steps.changed-files.outputs) }}"
+          echo "${{ steps.changed-files.outputs }}"
+          echo "${{ github.repository }}"
+          echo "${{ toJSON(github.event) }}"
+          echo "${{ github.actor }}" 
+
+      - name: Check participation from changed files
+        run: index.js
+# { ... }
+# Object
+# seongbin9786/changed-files
+# Object ---> toJSON하면 오류남. exit code 2.
+# seongbin9786
