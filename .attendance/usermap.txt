@@ -1,1 +1,3 @@
-seongbin9786 김성빈
+seongbin9786 김
+hello 성
+world 빈
