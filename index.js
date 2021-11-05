@@ -2,9 +2,9 @@
 // const github = require("@actions/github");
 const { Octokit } = require("@octokit/rest"); // 개발 용도로 직접 사용
 
-const MY_LIMITED_30DAYS_TOKEN = "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";
+const MY_LIMITED_30DAYS_TOKEN = "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";
 const owner = "seongbin9786";
-const repo = "study-nodejs-typescript";
+const repo = "check-attendance";
 
 async function run() {
   console.log("hi !");
