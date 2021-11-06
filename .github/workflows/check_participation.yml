@@ -22,11 +22,10 @@ jobs:
 
       - name: Show output
         run: |
-          echo "${{ toJSON(steps.changed-files.outputs) }}"
-          echo "${{ steps.changed-files.outputs }}"
           echo "${{ github.repository }}"
-          echo "${{ toJSON(github.event) }}"
-          echo "${{ github.actor }}" 
+          echo "${{ github.actor }}"
+          echo "${{ steps.changed-files.outputs.added_files }}"
+          echo "${{ steps.changed-files.outputs.deleted_files }}"
 
       - name: Check participation from changed files
         run: |
