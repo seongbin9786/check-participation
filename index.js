@@ -5,8 +5,8 @@ const core = require("@actions/core");
 const token = process.env.GITHUB_TOKEN;
 const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
 const userName = process.env.GITHUB_ACTOR;
-const addedFiles = (core && core.getInput("addedFiles")) || "";
-const deletedFiles = (core && core.getInput("deletedFiles")) || "";
+const addedFiles = process.env.ADDED_FILES || "";
+const deletedFiles = process.env.DELETED_FILES || "";
 
 const GitHubApiClient = require("./src/GitHubApiClient");
 const GitHubResources = require("./src/GitHubResources");
