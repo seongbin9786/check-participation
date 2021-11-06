@@ -29,7 +29,9 @@ jobs:
           echo "${{ github.actor }}" 
 
       - name: Check participation from changed files
-        run: node index.js
+        run: |
+          npm i
+          node index.js
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}" # 얜 기본 환경변수로 제공되지 않기 때문.
           ADDED_FILES: "${{ steps.changed-files.outputs.added_files }}"
