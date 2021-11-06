@@ -37,6 +37,7 @@ class GitHubApiClient {
     });
   }
 
+  // 이거 진짜로 갱신된다...
   async commitUpdatedReadMe(sha, content) {
     if (!content) {
       throw new Error("Empty README content! throwing error and exit.");
