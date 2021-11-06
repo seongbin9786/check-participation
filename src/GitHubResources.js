@@ -1,27 +1,18 @@
 class GitHubApiClient {
-  constructor(client, owner, repo) {
+  constructor(client, userMapFilePath, readMeFilePath) {
     this.client = client;
-    this.owner = owner;
-    this.repo = repo;
-  }
-
-  async getUserName() {
-    const {
-      data: [lastCommit],
-    } = await this.client.getCommitsFromRepo(this.owner, this.repo);
-    const userName = lastCommit.author.login;
-    console.log(userName);
-    return userName;
+    this.userMapFilePath = userMapFilePath || ".attendance/usermap.txt";
+    this.readMeFilePath = readMeFilePath || "README.md";
   }
 
   async getUserMap() {
     const {
       data: { content },
-    } = await this.client.getContentFromRepo(this.owner, this.repo);
+    } = await this.client.getContentOfPath(this.userMapFilePath);
 
     // base64 decode
     const result = Buffer.from(content, "base64").toString("utf8");
-    console.log(result);
+    console.log("decoded content:", result);
 
     // string -> map
     const arr = result.split("\n");
@@ -31,8 +22,24 @@ class GitHubApiClient {
       const [username, realname] = e.split(" ");
       userMap[username] = realname;
     });
-    console.log(userMap);
+    console.log("userMap:", userMap);
     return userMap;
+  }
+
+  async getReadMeFile() {
+    const {
+      data: { content },
+    } = await this.client.getContentOfPath(this.readMeFilePath);
+    // base64 decode
+    return Buffer.from(content, "base64").toString("utf8");
+  }
+
+  async updateAttendanceTable(updatedTable) {
+    const {
+      data: { sha },
+    } = await this.client.getContentOfPath(this.readMeFilePath);
+
+    await this.client.commitUpdatedReadMe(sha, updatedTable);
   }
 }
 

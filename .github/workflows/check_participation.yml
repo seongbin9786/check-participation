@@ -29,9 +29,9 @@ jobs:
           echo "${{ github.actor }}" 
 
       - name: Check participation from changed files
-        run: index.js
-# { ... }
-# Object
-# seongbin9786/changed-files
-# Object ---> toJSON하면 오류남. exit code 2.
-# seongbin9786
+        run: node index.js
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}" # 얜 기본 환경변수로 제공되지 않기 때문.
+        with:
+          addedFiles: "${{ steps.changed-files.outputs.added_files }}"
+          deletedFiles: "${{ steps.changed-files.outputs.deleted_files }}"
