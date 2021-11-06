@@ -1,3 +1,3 @@
-seongbin9786 김
-hello 성
-world 빈
+seongbin9786 김성빈
+RustShark 오규태
+Ohyaelim 오예림

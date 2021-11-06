@@ -46,6 +46,17 @@ async function run() {
     // base64 decode
     const result = Buffer.from(content, "base64").toString("utf8");
     console.log(result);
+
+    const arr = result.split("\n");
+
+    const userMap = {};
+    arr.forEach((e) => {
+      if (!e) return; // empty string도 여기 걸린다.
+      const [username, realname] = e.split(" ");
+      userMap[username] = realname;
+    });
+    console.log(arr);
+    console.log(userMap);
   } catch (error) {
     // core.setFailed(error.message);
     console.log(error);
