@@ -1,8 +1,9 @@
 // const core = require("@actions/core");
 // const github = require("@actions/github");
+require("dotenv").config();
 const { Octokit } = require("@octokit/rest"); // 개발 용도로 직접 사용
 
-const MY_LIMITED_30DAYS_TOKEN = "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";
+const MY_LIMITED_30DAYS_TOKEN = process.env.GITHUB_TOKEN;
 const owner = "seongbin9786";
 const repo = "check-participation";
 
