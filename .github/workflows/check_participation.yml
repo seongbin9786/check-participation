@@ -30,7 +30,7 @@ jobs:
 
       - name: Check participation from changed files
         run: |
-          npm i
+          npm ci
           node index.js
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}" # 얜 기본 환경변수로 제공되지 않기 때문.
