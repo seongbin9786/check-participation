@@ -63,7 +63,7 @@ class AttendanceDatabase {
 
   getUpdatedRecords() {
     const updatedRecords = Object.keys(this.userMap).reduce(
-      (acc, userName) => acc + `${userName}: ${this[userName]}\n`,
+      (acc, userName) => acc + `${userName}= ${this[userName]}\n`,
       ""
     );
     console.log("updatedRecords:", updatedRecords);
