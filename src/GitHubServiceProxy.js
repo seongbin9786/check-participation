@@ -43,13 +43,13 @@ class GitHubServiceProxy {
     return Buffer.from(content, "base64").toString("utf8");
   }
 
-  async pushUpdatedTable(updatedTable) {
+  async pushUpdatedReadMe(updatedReadMe) {
     // API로 파일 변경 commit 수행 시 이전 파일의 sha가 필요하기 때문에 sha를 먼저 구해옴.
     const {
       data: { sha },
     } = await this.client.getContentOfPath(this.readMeFilePath);
 
-    await this.client.commitUpdatedReadMe(sha, updatedTable);
+    await this.client.commitUpdatedReadMe(sha, updatedReadMe);
   }
 }
 

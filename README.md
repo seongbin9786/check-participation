@@ -3,7 +3,7 @@
 This action will run on every push to check members' participation for a given unit of time - for example a week - and marks them to README file.
 
 like:
-<table>
+<table id="attendance">
   <tr>
     <th></th>
     <th><strong>1 주차</strong></th>

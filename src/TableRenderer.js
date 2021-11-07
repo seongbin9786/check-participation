@@ -1,7 +1,7 @@
 class TableRenderer {
-  constructor(userMap, readMeFile, fullyAttendedMinimum) {
+  constructor(userMap, db, tableHTML, fullyAttendedMinimum) {
     this.userMap = userMap;
-    this.readMeFile = readMeFile;
+    this.tableHTML = tableHTML;
     this.fullyAttendedMinimum = fullyAttendedMinimum || 3;
   }
 
@@ -28,13 +28,8 @@ class TableRenderer {
     `;
   }
 
-  createUpdatedTable(db) {
-    return `
-      <table>
-        ${this._renderColumns()}
-        ${this._renderUserRow(u)}
-      </table>
-    `;
+  render() {
+    // do sth
   }
 }
 

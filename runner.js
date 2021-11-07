@@ -4,7 +4,7 @@ const GitHubApiClient = require("./src/GitHubApiClient");
 const GitHubServiceProxy = require("./src/GitHubServiceProxy");
 const AttendanceDatabase = require("./src/AttendanceDatabase");
 const UnitOfUpdate = require("./src/UnitOfUpdate");
-const TableRenderer = require("./src/TableRenderer");
+const ReadMeFileUpdater = require("./src/ReadMeFileUpdater");
 
 async function run(token, owner, repo, userName, addedFiles, deletedFiles) {
   try {
@@ -25,10 +25,10 @@ async function run(token, owner, repo, userName, addedFiles, deletedFiles) {
     const unitOfUpdate = new UnitOfUpdate(userName, addedFiles, deletedFiles);
     db.update(unitOfUpdate);
 
-    const tableRenderer = new TableRenderer(userMap, oldReadMeFile, 3);
-    const updatedTable = tableRenderer.createUpdatedTable(db);
+    const updater = new ReadMeFileUpdater(userMap, db, oldReadMeFile);
+    const updatedReadMe = updater.getUpdatedReadMe();
 
-    GitHubServiceProxy.pushUpdatedTable(updatedTable);
+    GitHubServiceProxy.pushUpdatedReadMe(updatedReadMe);
   } catch (error) {
     core && core.setFailed(error.message);
     console.log(error);
