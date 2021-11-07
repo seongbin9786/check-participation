@@ -1,23 +1,21 @@
 # Hello world JavaScript action
 
-This action prints "Hello World" or "Hello" + the name of a person to greet to the log. To learn how this action was built, see "[Creating a JavaScript action](https://help.github.com/en/articles/creating-a-javascript-action)" in the GitHub Help documentation.
+This actions is checking members' participation for a given unit of time - for example a week - and marks them to README file.
 
-## Inputs
+## Required input
 
-### `who-to-greet`
+Attendance Username-Id Mapping: `/.attendance/usermap.txt`
+Attendance database: `/.attendance/records.txt`
+ReadMe.md File: old `/README.md`
 
-**Required** The name of the person to greet. Default `"World"`.
+## Output
 
-## Outputs
+Automatically updated `/README.md`
 
-### `time`
+## How to test
 
-The time we greeted you.
-
-## Example usage
-
-```yaml
-uses: actions/hello-world-javascript-action@main
-with:
-  who-to-greet: 'Mona the Octocat'
+```bash
+$ npm i
+$ node index.js
 ```
+
