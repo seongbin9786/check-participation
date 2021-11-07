@@ -91,6 +91,8 @@ class AttendanceDatabase {
   _parseRecordsFile() {
     const linesOfRecords = this.recordsFile.split("\n"); // "k=v" 형태의 배열
     linesOfRecords.forEach((line) => {
+      if (!line) return; // 끝에 빈 String이 하나 추가돼서 오류발생
+
       const [userName, stringArr] = line.split("=");
 
       const intArr = stringArr
