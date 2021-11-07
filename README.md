@@ -49,7 +49,7 @@ path: `/README.md`
 
 content:
 ```
-<table id="attendance"></table>
+id="attendance"인 table Element가 하나 있어야 함.
 ```
 
 ## Output
@@ -62,4 +62,3 @@ Automatically updated `/README.md`
 $ npm i
 $ node index.js
 ```
-
