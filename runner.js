@@ -8,27 +8,33 @@ const ReadMeFileUpdater = require("./src/ReadMeFileUpdater");
 
 async function run(token, owner, repo, userName, addedFiles, deletedFiles) {
   try {
-    const GitHubServiceProxy = await _createGitHubServiceProxy(
+    // Step 1: Init proxy and fetch data
+    // Parallel로 호출하는 것이 좋을 것이다.
+    // https://stackoverflow.com/questions/35612428/call-async-await-functions-in-parallel
+    const gitHubServiceProxy = await _createGitHubServiceProxy(
       token,
       owner,
       repo,
       userName
     );
+    const userMap = await gitHubServiceProxy.getUserMap();
+    const configFile = await gitHubServiceProxy.getConfigFile();
+    const oldRecordsFile = await gitHubServiceProxy.getRecordsFile();
+    const oldReadMeFile = await gitHubServiceProxy.getReadMeFile();
 
-    // Parallel로 호출하는 것이 좋을 것이다.
-    // https://stackoverflow.com/questions/35612428/call-async-await-functions-in-parallel
-    const userMap = await GitHubServiceProxy.getUserMap();
-    const oldReadMeFile = await GitHubServiceProxy.getReadMeFile();
-    const oldRecordsFile = await GitHubServiceProxy.getRecordsFile();
-
-    const db = new AttendanceDatabase(userMap, oldRecordsFile);
+    // Step 2: Update to DB
+    const db = await _createAttendanceDatabase(
+      userMap,
+      configFile,
+      oldRecordsFile
+    );
     const unitOfUpdate = new UnitOfUpdate(userName, addedFiles, deletedFiles);
     db.update(unitOfUpdate);
 
-    const updater = new ReadMeFileUpdater(userMap, db, oldReadMeFile);
+    // Step 3: Update ReadMe
+    const updater = new ReadMeFileUpdater(userMap, oldReadMeFile, db);
     const updatedReadMe = updater.getUpdatedReadMe();
-
-    GitHubServiceProxy.pushUpdatedReadMe(updatedReadMe);
+    gitHubServiceProxy.pushUpdatedReadMe(updatedReadMe);
   } catch (error) {
     core && core.setFailed(error.message);
     console.log(error);
@@ -41,7 +47,13 @@ async function run(token, owner, repo, userName, addedFiles, deletedFiles) {
 async function _createGitHubServiceProxy(token, owner, repo, userName) {
   const apiClient = new GitHubApiClient(token, owner, repo, userName);
   await apiClient.fetchAndUpdateAuthorEmail(); // async constructor는 없는 걸까? 이상하겠지?
-  return new GitHubServiceProxy(apiClient);
+  return new GitHubServiceProxy(apiClient /*, 나머지 인자는 기본값 사용 */);
+}
+
+async function _createAttendanceDatabase(userMap, configFile, oldRecordsFile) {
+  const db = new AttendanceDatabase(userMap, configFile, oldRecordsFile);
+  await db.parseFiles();
+  return db;
 }
 
 module.exports = run;

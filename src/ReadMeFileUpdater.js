@@ -1,17 +1,19 @@
 const TableRenderer = require("./TableRenderer");
 
 class ReadMeFileUpdater {
-  constructor(userMap, db, readMeFile, fullyAttendedMinimum) {
+  constructor(userMap, readMeFile, db) {
     this.readMeFile = readMeFile;
+
+    // readMe를 세 부분으로 분할한다.
     const [htmlBeforeTable, table, htmlAfterTable] =
       this._splitReadMeHTML(readMeFile);
+
     this.htmlBeforeTable = htmlBeforeTable;
     this.htmlAfterTable = htmlAfterTable;
     this.tableRenderer = new TableRenderer(
       userMap,
-      db,
       table, // Markdown 중 Table만
-      fullyAttendedMinimum
+      db
     );
   }
 

@@ -1,18 +1,29 @@
 class GitHubServiceProxy {
-  constructor(client, userMapFilePath, readMeFilePath, recordsFilePath) {
+  constructor(
+    client,
+    userMapFilePath = ".attendance/usermap.txt",
+    configFilePath = ".attendance/config.txt",
+    readMeFilePath = "README.md",
+    recordsFilePath = ".attendance/records.txt"
+  ) {
     this.client = client;
-    this.userMapFilePath = userMapFilePath || ".attendance/usermap.txt";
-    this.readMeFilePath = readMeFilePath || "README.md";
-    this.recordsFilePath = recordsFilePath || ".attendance/records.txt";
+    this.userMapFilePath = userMapFilePath;
+    this.configFilePath = configFilePath;
+    this.readMeFilePath = readMeFilePath;
+    this.recordsFilePath = recordsFilePath;
+  }
+
+  // 공통 코드 재활용 목적
+  async _getDecodedContentOfPath(path) {
+    const {
+      data: { content },
+    } = await this.client.getContentOfPath(path);
+
+    return Buffer.from(content, "base64").toString("utf8"); // base64 decode
   }
 
   async getUserMap() {
-    const {
-      data: { content },
-    } = await this.client.getContentOfPath(this.userMapFilePath);
-
-    // base64 decode
-    const result = Buffer.from(content, "base64").toString("utf8");
+    const result = await this._getDecodedContentOfPath(this.userMapFilePath);
     console.log("decoded content:", result);
 
     // string -> map
@@ -27,20 +38,16 @@ class GitHubServiceProxy {
     return userMap;
   }
 
+  async getConfigFile() {
+    return await this._getDecodedContentOfPath(this.configFilePath);
+  }
+
   async getReadMeFile() {
-    const {
-      data: { content },
-    } = await this.client.getContentOfPath(this.readMeFilePath);
-    // base64 decode
-    return Buffer.from(content, "base64").toString("utf8");
+    return await this._getDecodedContentOfPath(this.readMeFilePath);
   }
 
   async getRecordsFile() {
-    const {
-      data: { content },
-    } = await this.client.getContentOfPath(this.recordsFilePath);
-    // base64 decode
-    return Buffer.from(content, "base64").toString("utf8");
+    return await this._getDecodedContentOfPath(this.recordsFilePath);
   }
 
   async pushUpdatedReadMe(updatedReadMe) {
