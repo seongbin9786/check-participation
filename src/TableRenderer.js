@@ -71,8 +71,8 @@ class TableRenderer {
     });
     table += "</table>";
     console.log(table);
-    // return table;
-    throw new Error("stop!");
+    return table;
+    // throw new Error("stop!");
   }
 }
 
