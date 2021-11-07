@@ -26,7 +26,6 @@ jobs:
 
       - name: Show output
         run: |
-          echo "${{ node -v }}"
           echo "${{ github.repository }}"
           echo "${{ github.actor }}"
           echo "${{ steps.changed-files.outputs.added_files }}"
