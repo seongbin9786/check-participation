@@ -1,4 +1,4 @@
-name: Participation Logger
+name: Participation Checker
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   logging:
-    name: Logging another participation
+    name: Start checking participation
     runs-on: ubuntu-latest
 
     steps:

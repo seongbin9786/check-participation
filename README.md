@@ -7,9 +7,50 @@ like:
 
 ## Required input
 
-Attendance Username-Id Mapping: `/.attendance/usermap.txt` <br/>
-Attendance database: `/.attendance/records.txt` <br/>
-ReadMe.md File: old `/README.md` <br/>
+#### UserName-RealName Mapping File
+
+아래 내용엔 내용 이외에 주석이 위치할 수 없다.
+
+path: `/.attendance/usermap.txt`
+
+content:
+```
+seongbin9786 김성빈
+RustShark 오규태
+Ohyaelim 오예림
+```
+
+#### User Participation Records File
+
+path: `/.attendance/records.txt`
+
+content:
+```
+seongbin9786=1,1,1,3,3,3,2
+RustShark=0,0,0,0,0,0,0
+Ohyaelim=0,0,0,0,0,0,0
+```
+
+#### Config File
+
+path: `/.attendance/config.txt`
+
+content:
+```
+firstSession=2021-10-03 00:00
+sessionName=Week
+sessionLength=7
+fullyAttendedMinimum=3
+```
+
+#### ReadMe.md File
+
+path: `/README.md` 
+
+content:
+```
+<table id="attendance"></table>
+```
 
 ## Output
 
