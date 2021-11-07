@@ -1,4 +1,4 @@
-firstSession=2021-11-06 19:00
+firstSession=2021-10-03 00:00
 sessionName=Week
 sessionLength=7
 fullyAttendedMinimum=3

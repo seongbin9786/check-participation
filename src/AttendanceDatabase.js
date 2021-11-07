@@ -35,7 +35,7 @@ class AttendanceDatabase {
     // 즉 1이 넘는다. 하루 차이보다 더 난다는 뜻이다. => 다음 주차로 가는 게 맞다.
     // 따라서 ceil을 쓰는 게 맞다. floor를 쓴다면 23:59 차이까지 봐주는 것이다.
 
-    this.curSession = Math.ceil(dayPassed / sessionLength) + 1;
+    this.curSession = Math.ceil(dayPassed / this.sessionLength) + 1;
   }
 
   // 몇 번째 주차를 업데이트할지를 받아와야 할 것 같은데용??^^

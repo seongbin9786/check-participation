@@ -45,9 +45,9 @@ class TableRenderer {
         ${userRecords.map(
           (num) =>
             `<td>${
-              num >= FULLY_ATTEND_MINIMUM
+              num >= this.fullyAttendedMinimum
                 ? fullyAttended
-                : `${num}/${FULLY_ATTEND_MINIMUM}`
+                : `${num}/${this.fullyAttendedMinimum}`
             }</td>`
         )}
       </tr>
@@ -59,14 +59,17 @@ class TableRenderer {
   render() {
     let table = '<table id="attendance">';
     table += this._renderColumns();
-    this.userMap.keys().forEach((userName) => {
+    Object.keys(this.userMap).forEach((userName) => {
       const realName = this.userMap[userName];
-      table += this._renderUserRow(realName, db.getUserRecordsBy(userName));
+      table += this._renderUserRow(
+        realName,
+        this.db.getUserRecordsBy(userName)
+      );
     });
     table += "</table>";
     console.log(table);
-    // return table;
-    throw new Error("stop!");
+    return table;
+    // throw new Error("stop!");
   }
 }
 
