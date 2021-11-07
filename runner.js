@@ -29,12 +29,17 @@ async function run(token, owner, repo, userName, addedFiles, deletedFiles) {
       oldRecordsFile
     );
     const unitOfUpdate = new UnitOfUpdate(userName, addedFiles, deletedFiles);
-    db.update(unitOfUpdate);
+    db.updateFromNewCommit(unitOfUpdate);
 
     // Step 3: Update ReadMe
     const updater = new ReadMeFileUpdater(userMap, oldReadMeFile, db);
     const updatedReadMe = updater.getUpdatedReadMe();
-    gitHubServiceProxy.pushUpdatedReadMe(updatedReadMe);
+    await gitHubServiceProxy.pushUpdatedReadMe(updatedReadMe);
+
+    // Step 4: Update Records
+    // TODO
+    const updatedRecords = db.getUpdatedRecords();
+    await gitHubServiceProxy.pushUpdatedRecords(updatedRecords);
   } catch (error) {
     core && core.setFailed(error.message);
     console.log(error);

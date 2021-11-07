@@ -19,6 +19,9 @@ class AttendanceDatabase {
     this.sessionName = null;
     this.sessionLength = null;
     this.curSession = null;
+
+    // for change
+    this.changed = {};
   }
 
   parseFiles() {
@@ -39,7 +42,7 @@ class AttendanceDatabase {
   }
 
   // 몇 번째 주차를 업데이트할지를 받아와야 할 것 같은데용??^^
-  update(unitOfUpdate) {
+  updateFromNewCommit(unitOfUpdate) {
     const { userName, addedFiles, deletedFiles } = unitOfUpdate;
 
     // 반드시 parseFiles 이후 실행돼야 함.
@@ -55,6 +58,16 @@ class AttendanceDatabase {
     // index에서 주차는 1-index 니까 1 빼줘야 함.
     console.log("changed_files_diff:", diff);
     this[userName][this.curSession - 1] += diff;
+    this.changed = { userName, value: this[userName][this.curSession - 1] };
+  }
+
+  getUpdatedRecords() {
+    const updatedRecords = Object.keys(this.userMap).reduce(
+      (acc, userName) => acc + `${userName}: ${this[userName]}\n`,
+      ""
+    );
+    console.log("updatedRecords:", updatedRecords);
+    return updatedRecords;
   }
 
   // returns string value
@@ -65,10 +78,6 @@ class AttendanceDatabase {
   // returns int array
   getUserRecordsBy(userName) {
     return this[userName];
-  }
-
-  getFullyAttendedMinimum() {
-    return this.fullyAttendedMinimum;
   }
 
   _parseConfigFile() {

@@ -56,7 +56,26 @@ class GitHubServiceProxy {
       data: { sha },
     } = await this.client.getContentOfPath(this.readMeFilePath);
 
-    await this.client.commitUpdatedReadMe(sha, updatedReadMe);
+    await this.client.commitFileChanges(
+      sha,
+      updatedReadMe,
+      this.readMeFilePath,
+      "docs: Updated Participation Checking Table"
+    );
+  }
+
+  async pushUpdatedRecords(updatedRecords) {
+    // API로 파일 변경 commit 수행 시 이전 파일의 sha가 필요하기 때문에 sha를 먼저 구해옴.
+    const {
+      data: { sha },
+    } = await this.client.getContentOfPath(this.recordsFilePath);
+
+    await this.client.commitFileChanges(
+      sha,
+      updatedRecords,
+      this.recordsFilePath,
+      "docs: Updated User Participation Records"
+    );
   }
 }
 
