@@ -1,4 +1,4 @@
-# Hello world JavaScript action
+# Check Participation
 
 This actions is checking members' participation for a given unit of time - for example a week - and marks them to README file.
 
