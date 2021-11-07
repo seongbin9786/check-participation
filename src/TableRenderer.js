@@ -29,7 +29,7 @@ class TableRenderer {
   }
 
   render() {
-    // do sth
+    throw new Error("Not implemented yet");
   }
 }
 
