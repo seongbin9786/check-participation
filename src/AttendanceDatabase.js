@@ -45,9 +45,15 @@ class AttendanceDatabase {
     // 반드시 parseFiles 이후 실행돼야 함.
     if (!this[userName]) throw new Error("update is called before load!");
 
-    const diff = addedFiles.split(",").length - deletedFiles.split(",").length;
+    // string="" 이면 split 해도 length=1 이어서 문제 있음.
+    const addedFilesCnt =
+      addedFiles.length > 0 ? addedFiles.split(" ").length : 0;
+    const deletedFilesCnt =
+      deletedFiles.length > 0 ? deletedFiles.split(" ").length : 0;
+    const diff = addedFilesCnt - deletedFilesCnt;
 
     // index에서 주차는 1-index 니까 1 빼줘야 함.
+    console.log("changed_files_diff:", diff);
     this[userName][this.curSession - 1] += diff;
   }
 
