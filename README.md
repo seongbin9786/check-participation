@@ -9,7 +9,7 @@ like below:
 
 > 아래 문서 중 `README.md` 이외에 내용에 주석이 위치할 수 없다.
 > 
-> There must be no content inside each documents other than those required keys and values
+> There must be no content inside each documents other than those required keys and values mentioned below.
 
 #### UserName-RealName Mapping File
 
