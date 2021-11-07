@@ -40,6 +40,7 @@ class GitHubApiClient {
   // 이거 진짜로 갱신된다...
   async commitUpdatedReadMe(sha, content) {
     if (!content) {
+      // TODO: 여기서 throw했는데 왜 try-catch에 안 걸리고 UnhandledPromiseRejectionWarning이 뜰까?
       throw new Error("Empty README content! throwing error and exit.");
     }
     return await this.octokit.rest.repos.createOrUpdateFileContents({
