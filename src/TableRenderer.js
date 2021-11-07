@@ -23,10 +23,11 @@ class TableRenderer {
     return `
       <tr>
         <th></th> <!-- 이 부분은 이름 영역이라 빈 column -->
-        ${[...Array(this.curSession)].reduce((acc, _, i) => {
-          acc += `<th><strong>${i} ${this.sessionName}</strong></th>`;
-        }, "")}
+        ${[...Array(this.curSession)].map(
+          (_, i) => `<th><strong>${i} ${this.sessionName}</strong></th>`
+        )}
       </tr>`
+      .replaceAll(",", "") // map을 썼기 때문에 배열이며 String으로 변환 시 , 가 붙으므로 제거
       .replaceAll("\n", "")
       .trim();
   }
@@ -52,6 +53,7 @@ class TableRenderer {
         )}
       </tr>
     `
+      .replaceAll(",", "") // map을 썼기 때문에 배열이며 String으로 변환 시 , 가 붙으므로 제거
       .replaceAll("\n", "")
       .trim();
   }
