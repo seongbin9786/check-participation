@@ -49,17 +49,3 @@ path: `/README.md`
 
 content:
 ```
-<table id="attendance"></table>
-```
-
-## Output
-
-Automatically updated `/README.md`
-
-## How to test
-
-```bash
-$ npm i
-$ node index.js
-```
-
