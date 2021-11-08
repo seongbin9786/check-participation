@@ -32,6 +32,7 @@ class GitHubServiceProxy {
     arr.forEach((e) => {
       if (!e) return; // empty string도 여기 걸린다.
       const [username, realname] = e.split(" ");
+      if (!username) return; // 빈 문자열로 key가 올 수 있기 때문
       userMap[username] = realname;
     });
     console.log("userMap:", userMap);
